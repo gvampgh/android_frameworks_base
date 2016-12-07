@@ -45,14 +45,19 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewPropertyAnimator;
 import android.view.Window;
+import android.view.Gravity;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.ImageButton;
+import android.provider.Settings;
+
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.internal.colorextraction.drawable.GradientDrawable;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import com.android.systemui.Dependency;
 import com.android.settingslib.Utils;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
@@ -99,6 +104,7 @@ import com.android.systemui.shared.system.WindowManagerWrapper;
 import com.android.systemui.stackdivider.WindowManagerProxy;
 import com.android.systemui.statusbar.FlingAnimationUtils;
 import com.android.systemui.statusbar.phone.ScrimController;
+import com.android.systemui.tuner.TunerService;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -108,7 +114,7 @@ import java.util.List;
  * This view is the the top level layout that contains TaskStacks (which are laid out according
  * to their SpaceNode bounds.
  */
-public class RecentsView extends FrameLayout {
+public class RecentsView extends FrameLayout implements TunerService.Tunable {
 
     private static final String TAG = "RecentsView";
 
@@ -138,6 +144,15 @@ public class RecentsView extends FrameLayout {
     private ColorDrawable mMultiWindowBackgroundScrim;
     private ValueAnimator mBackgroundScrimAnimator;
     private Point mTmpDisplaySize = new Point();
+
+	private boolean mShowClearAllRecents=true;
+    private int mClearRecentsLocation=3;
+    View mFloatingButton;
+    View mClearRecents;
+    private static final String SHOW_CLEAR_ALL_RECENTS =
+            "system:" + Settings.System.SHOW_CLEAR_ALL_RECENTS;
+    private static final String RECENTS_CLEAR_ALL_LOCATION =
+            "system:" + Settings.System.RECENTS_CLEAR_ALL_LOCATION;
 
     private final AnimatorUpdateListener mUpdateBackgroundScrimAlpha = (animation) -> {
         int alpha = (Integer) animation.getAnimatedValue();
@@ -376,6 +391,10 @@ public class RecentsView extends FrameLayout {
         mEmptyView.setVisibility(View.VISIBLE);
         mEmptyView.bringToFront();
         mStackActionButton.bringToFront();
+
+        if (mFloatingButton != null) {
+            mFloatingButton.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -386,6 +405,11 @@ public class RecentsView extends FrameLayout {
         mTaskStackView.setVisibility(View.VISIBLE);
         mTaskStackView.bringToFront();
         mStackActionButton.bringToFront();
+
+        if (mFloatingButton != null && mShowClearAllRecents) {
+            mFloatingButton.setVisibility(View.VISIBLE);
+        }       
+
     }
 
     /**
@@ -405,14 +429,85 @@ public class RecentsView extends FrameLayout {
     protected void onAttachedToWindow() {
         EventBus.getDefault().register(this, RecentsActivity.EVENT_BUS_PRIORITY + 1);
         EventBus.getDefault().register(mTouchHandler, RecentsActivity.EVENT_BUS_PRIORITY + 2);
+        mClearRecents = (ImageButton) ((View)getParent()).findViewById(R.id.clear_recents);
+        mFloatingButton = ((View)getParent()).findViewById(R.id.floating_action_button);
+        mClearRecents.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                EventBus.getDefault().send(new DismissAllTaskViewsEvent());
+            }
+        });
+        mClearRecents.setVisibility(View.VISIBLE);
+        Dependency.get(TunerService.class).addTunable(this,
+                SHOW_CLEAR_ALL_RECENTS,
+                RECENTS_CLEAR_ALL_LOCATION);
         super.onAttachedToWindow();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        Dependency.get(TunerService.class).removeTunable(this);
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().unregister(mTouchHandler);
+    }
+
+ @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case SHOW_CLEAR_ALL_RECENTS:
+                mShowClearAllRecents =
+                        newValue == null || Integer.parseInt(newValue) != 0;
+                showClearAllRecents();
+                break;
+            case RECENTS_CLEAR_ALL_LOCATION:
+                mClearRecentsLocation =
+                        newValue == null ? 3 : Integer.parseInt(newValue);
+                setClearRecentsLocation();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void showClearAllRecents() {
+        if (mShowClearAllRecents) {
+            mStackActionButton.setVisibility(View.GONE);
+            mFloatingButton.setVisibility(View.VISIBLE);
+        } else {
+            mFloatingButton.setVisibility(View.GONE);
+            mStackActionButton.setVisibility(View.VISIBLE);
+        }
+    }
+    private void setClearRecentsLocation() {
+        if (mFloatingButton == null)
+            return;
+         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)
+             mFloatingButton.getLayoutParams();
+         params.topMargin = 2 * (mContext.getResources().
+             getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
+	mClearRecentsLocation=3;
+        switch (mClearRecentsLocation) {
+            case 0:
+                params.gravity = Gravity.TOP | Gravity.RIGHT;
+                break;
+            case 1:
+                params.gravity = Gravity.TOP | Gravity.LEFT;
+                break;
+            case 2:
+                params.gravity = Gravity.TOP | Gravity.CENTER;
+                break;
+            case 3:
+            default:
+                params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+                break;
+            case 4:
+                params.gravity = Gravity.BOTTOM | Gravity.LEFT;
+                break;
+            case 5:
+                params.gravity = Gravity.BOTTOM | Gravity.CENTER;
+                break;
+        }
+        mFloatingButton.setLayoutParams(params);
     }
 
     /**
@@ -735,6 +830,11 @@ public class RecentsView extends FrameLayout {
      * Shows the stack action button.
      */
     private void showStackActionButton(final int duration, final boolean translate) {
+
+    	if (mFloatingButton != null && mShowClearAllRecents) {
+            return;
+        }
+        
         final ReferenceCountedTrigger postAnimationTrigger = new ReferenceCountedTrigger();
         if (mStackActionButton.getVisibility() == View.INVISIBLE) {
             mStackActionButton.setVisibility(View.VISIBLE);
