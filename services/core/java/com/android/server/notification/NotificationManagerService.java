@@ -5056,7 +5056,6 @@ public class NotificationManagerService extends SystemService {
             mNotificationLight.setFlashing(ledValues.getColor(), Light.LIGHT_FLASH_TIMED,
                     ledValues.getOnMs(), ledValues.getOffMs());
         }
-        return false;
     }
 
     private boolean isLedForcedOn(NotificationRecord nr) {
@@ -5991,3 +5990,4 @@ public class NotificationManagerService extends SystemService {
         }
     }
 }
+
