@@ -294,5 +294,3 @@ PRODUCT_COPY_FILES += \
    $(LOCAL_PATH)/ringtones/ogg/Sunset.ogg:system/media/audio/ringtones/Sunset.ogg \
    $(LOCAL_PATH)/ringtones/ogg/Wood.ogg:system/media/audio/ringtones/Wood.ogg \
    
-   
-	  

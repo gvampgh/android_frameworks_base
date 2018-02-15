@@ -25,6 +25,8 @@
     <!-- Usb drive persistent notification -->
     <java-symbol type="bool" name="config_persistUsbDriveNotification" />
 
+    <java-symbol type="bool" name="config_useDefaultBatchingForAccel" />
+
     <!-- ADB notification -->
     <java-symbol type="string" name="adb_net_active_notification_title" />
     <java-symbol type="string" name="adb_both_active_notification_title" />
