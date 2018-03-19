@@ -44,13 +44,11 @@
   <!-- Single hand mode -->
   <!-- Strings for tethered notification -->
   <!-- Shown when the device is tethered -->
-<<<<<<< HEAD
-=======
+
   <string name="tethered_notification_no_device_message">Cha deach uidheam a cheangal ris</string>
   <string name="tethered_notification_one_device_message"><xliff:g id="count">%1$s</xliff:g> uidheam ceangailte ris</string>
   <string name="tethered_notification_multi_device_message"><xliff:g id="count">%1$s</xliff:g> uidheam(an) ceangailte ris</string>
   <!-- Zen mode buttons -->
   <string name="silent_mode_priority">Prìomhachas</string>
   <string name="silent_mode_none">Chan eil gin</string>
->>>>>>> 323df300d98547f1d0a3110980c753ad1e95a472
 </resources>
