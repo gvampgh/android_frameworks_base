@@ -6729,7 +6729,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         boolean useHapticFeedback = down
                 && (policyFlags & WindowManagerPolicy.FLAG_VIRTUAL) != 0
-                && repeatCount == 0
+                && repeatCount == 0;
 
         // Specific device key handling
         if (dispatchKeyToKeyHandlers(event)) {
