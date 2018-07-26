@@ -1661,12 +1661,6 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
     boolean isSecureLocked(WindowState w) {
-        if ((w.mAttrs.flags&WindowManager.LayoutParams.FLAG_SECURE) != 0) {
-            return true;
-        }
-        if (isScreenCaptureDisabledLocked(UserHandle.getUserId(w.mOwnerUid))) {
-            return true;
-        }
         return false;
     }
 
