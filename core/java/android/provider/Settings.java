@@ -7670,6 +7670,12 @@ public final class Settings {
          */
         public static final int WIFI_SLEEP_POLICY_NEVER = 2;
 
+	/**
+         * Three Finger Gesture from Oppo
+         * @hide
+         */
+        public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
+
         /**
          * Value to specify if the user prefers the date, time and time zone
          * to be automatically fetched from the network (NITZ). 1=yes, 0=no

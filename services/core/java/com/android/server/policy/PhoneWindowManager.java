@@ -1278,7 +1278,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private ImmersiveModeConfirmation mImmersiveModeConfirmation;
 
     private SystemGesturesPointerEventListener mSystemGestures;
-
+    private OPGesturesListener mOPGestures;
+    
     IStatusBarService getStatusBarService() {
         synchronized (mServiceAquireLock) {
             if (mStatusBarService == null) {
@@ -2205,6 +2206,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     context, minHorizontal, maxHorizontal, minVertical, maxVertical, maxRadius);
         }
 
+	mOPGestures = new OPGesturesListener(context, new OPGesturesListener.Callbacks() {
+                    @Override
+                    public void onSwipeThreeFinger() {
+                        mHandler.post(mScreenshotRunnable);
+                    }
+                });
+
         mHandler = new PolicyHandler();
         mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
         mCameraManager.registerTorchCallback(new TorchModeCallback(), mHandler);
@@ -2773,6 +2781,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
 
             updateKeyAssignments();
+
+	    //Enable 3-fingers screenshot
+ 	    mWindowManagerFuncs.registerPointerEventListener(mOPGestures);
 
             // Configure rotation lock.
             int userRotation = Settings.System.getIntForUser(resolver,
