@@ -125,7 +125,7 @@ public class BoostFramework {
             try {
                 mAcquireFunc.invoke(mPerf, duration, list);
             } catch(Exception e) {
-                Log.e(TAG,"Exception " + e);
+                Log.e(TAG,"Exception_0x1 " + e);
             }
         }).start();
     }
@@ -136,7 +136,7 @@ public class BoostFramework {
             try {
                 mReleaseFunc.invoke(mPerf);
             } catch(Exception e) {
-                Log.e(TAG,"Exception " + e);
+                Log.e(TAG,"Exception_0x2 " + e);
             }
         }).start();
     }
@@ -188,7 +188,7 @@ public class BoostFramework {
             try {
                 mAcquireTouchFunc.invoke(mPerf, ev, metrics, duration, list);
             } catch(Exception e) {
-                Log.e(TAG,"Exception " + e);
+                Log.e(TAG,"Exception_0x3 " + e);
             }
         }).start();
     }
@@ -201,7 +201,7 @@ public class BoostFramework {
             Object retVal = mIOPStart.invoke(mPerf,pid,pkg_name);
             ret = (int)retVal;
         } catch(Exception e) {
-            Log.e(TAG,"Exception " + e);
+            Log.e(TAG,"Exception_0x4 " + e);
         }
         return ret;
     }
@@ -214,7 +214,7 @@ public class BoostFramework {
              Object retVal = mIOPStop.invoke(mPerf);
              ret = (int)retVal;
          } catch(Exception e) {
-             Log.e(TAG,"Exception " + e);
+             Log.e(TAG,"Exception_0x5 " + e);
          }
          return ret;
     }
