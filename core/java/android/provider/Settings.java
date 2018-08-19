@@ -2906,6 +2906,12 @@ public final class Settings {
         private static final Validator WIFI_STATIC_GATEWAY_VALIDATOR = sLenientIpAddressValidator;
 
         /**
+         * Whether to display the 4g or lte network icon in the statusbar
+         * @hide
+         */
+        public static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
+        
+        /**
          * If using static IP, the net mask.
          * <p>
          * Example: "255.255.255.0"
@@ -6889,6 +6895,7 @@ public final class Settings {
          * @hide
          */
         public static final String CAMERA_GESTURE_DISABLED = "camera_gesture_disabled";
+
 
         /**
          * Whether the camera launch gesture to double tap the power button when the screen is off
