@@ -4615,6 +4615,9 @@ message MetricsEvent {
     // OS: P
     ANOMALY_TYPE_UNOPTIMIZED_BT = 1237;
 
+    // Optimized LineageOS 15.1
+    OPTLOS = 9999;
+
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
   }
