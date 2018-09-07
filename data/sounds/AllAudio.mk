@@ -283,6 +283,7 @@ PRODUCT_COPY_FILES += \
    $(LOCAL_PATH)/ringtones/ogg/One_Step_Forward.ogg:system/media/audio/ringtones/One_Step_Forward.ogg \
    $(LOCAL_PATH)/ringtones/ogg/Orange.ogg:system/media/audio/ringtones/Orange.ogg \
    $(LOCAL_PATH)/ringtones/ogg/Over_the_Horizon.ogg:system/media/audio/ringtones/Over_the_Horizon.ogg \
+   $(LOCAL_PATH)/ringtones/ogg/Over_the_Horizon_Mellow_Mix.ogg:system/media/audio/ringtones/Over_the_Horizon_Mellow_Mix.ogg \
    $(LOCAL_PATH)/ringtones/ogg/Pianist.ogg:system/media/audio/ringtones/Pianist.ogg \
    $(LOCAL_PATH)/ringtones/ogg/Rose.ogg:system/media/audio/ringtones/Rose.ogg \
    $(LOCAL_PATH)/ringtones/ogg/Rush.ogg:system/media/audio/ringtones/Rush.ogg \
