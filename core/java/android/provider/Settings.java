@@ -4124,13 +4124,21 @@ public final class Settings {
         public static final String SHOW_CLEAR_ALL_RECENTS = "show_clear_all_recents";
 
         /**
-         * location of the clear all rectents button
+
+         * Force an Ambient notification when a new media track is being played
+         * 0 - disabled
+         * 1 - show track info within normal Ambient Display and force a new Ambient clean layout when skipping tracks
          * @hide
          */
         public static final String  RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
 
         /**
-         * Whether to show the battery info on the lockscreen while charging
+         * @hide
+         * Whether to set a lower brightness level when enabling night mode
+         * 0: Disabled
+         * 1: Set the brightness to a very low value
+         * 2: Set the brightness to a low value
+         * 3: Set the brightness to a medium value
          * @hide
          */
         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
@@ -4141,6 +4149,12 @@ public final class Settings {
          * @hide
          */
         public static final String SHOW_FOURG_ICON = "show_fourg_icon";
+
+        /**
+         * Whether to display cross sign for a data disabled connection
+         * @hide
+         */
+        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
