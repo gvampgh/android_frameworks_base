@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (c) 2018 AospExtended ROM
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+
+    <java-symbol type="bool" name="config_useSystemClockforRotationSensor" />
+
+    <!-- Package Manager -->
+    <java-symbol type="array" name="config_disabledComponents" />
+    <java-symbol type="array" name="config_forceEnabledComponents" />
+
+    <!-- Usb drive persistent notification -->
+    <java-symbol type="bool" name="config_persistUsbDriveNotification" />
+
+    <java-symbol type="bool" name="config_useDefaultBatchingForAccel" />
+
+    <!-- Full screen aspect ratio -->
+    <java-symbol type="bool" name="config_haveHigherAspectRatioScreen" />
+    <java-symbol type="dimen" name="config_screenAspectRatio" />
+
+    <!-- Device keyhandlers -->
+    <java-symbol type="array" name="config_deviceKeyHandlerLibs" />
+    <java-symbol type="array" name="config_deviceKeyHandlerClasses" />
+
+    <!-- Gesture Sensor -->
+    <java-symbol type="bool" name="config_enableGestureService" />
+
+    <!-- Whether notify fingerprint client of successful cancelled authentication -->
+    <java-symbol type="bool" name="config_notifyClientOnFingerprintCancelSuccess" />
+
+    <java-symbol type="string" name="reboot_to_recovery_title" />
+    <java-symbol type="string" name="reboot_to_recovery_message" />
+    <java-symbol type="string" name="reboot_to_bootloader_title" />
+    <java-symbol type="string" name="reboot_to_bootloader_message" />
+    <java-symbol type="string" name="reboot_title" />
+    <java-symbol type="string" name="reboot_message" />
+
+  <!-- Emergency button in power menu -->
+  <java-symbol type="bool" name="config_showEmergencyButtonInPowerMenu" />
+
+  <!-- Whether device supports an alt. ambient display -->
+  <java-symbol type="bool" name="config_alt_ambient_display"/>
+
+  <java-symbol type="array" name="config_vendorPlatformSignatures" />
+
+    <!-- HW keys binding -->
+    <java-symbol type="anim" name="custom_app_in" />
+    <java-symbol type="anim" name="custom_app_out" />
+    <java-symbol type="integer" name="config_deviceHardwareKeys" />
+
+    <!-- Button brightness -->
+    <java-symbol type="bool" name="config_button_brightness_support" />
+    <java-symbol type="integer" name="config_button_brightness_default" />
+
+  <!-- Proximity check on screen on -->
+  <java-symbol type="bool" name="config_proximityCheckOnWake" />
+
+  <!-- Proximity check timeout -->
+  <java-symbol type="integer" name="config_proximityCheckTimeout" />
+
+  <!-- Proximity check on screen on default -->
+  <java-symbol type="bool" name="config_proximityCheckOnWakeEnabledByDefault" />
+
+  <!-- Home button wake -->
+  <java-symbol type="bool" name="config_HomeWakeButton" />
+
+  <java-symbol type="bool" name="config_intrusiveBatteryLed" />
+  <java-symbol type="bool" name="config_multiColorBatteryLed" />
+  <java-symbol type="bool" name="config_multiColorNotificationLed" />
+  <java-symbol type="bool" name="config_ledCanPulse" />
+
+  <!-- Notification info -->
+  <java-symbol type="color" name="notification_info_button_text" />
+
+  <!-- Toast text and bg colors -->
+  <java-symbol type="color" name="toast_bg_color" />
+  <java-symbol type="color" name="toast_text_color" />
+
+  <!-- Power menu items -->
+  <java-symbol type="color" name="power_menu_power_off" />
+  <java-symbol type="color" name="power_menu_restart" />
+  <java-symbol type="color" name="power_menu_restart_advanced" />
+  <java-symbol type="color" name="power_menu_hot_reboot" />
+  <java-symbol type="color" name="power_menu_advanced_bootloader" />
+  <java-symbol type="color" name="power_menu_advanced_recovery" />
+  <java-symbol type="color" name="power_menu_advanced_system_restart_ui" />
+  <java-symbol type="color" name="power_menu_screenshot" />
+  <java-symbol type="color" name="power_menu_screenrecord" />
+  <java-symbol type="color" name="power_menu_torch" />
+  <java-symbol type="color" name="power_menu_settings" />
+  <java-symbol type="color" name="power_menu_lock" />
+
+  <!-- Auto fill -->
+  <java-symbol type="color" name="autofill_save_title_color" />
+  <java-symbol type="color" name="autofill_autofill_save_custom_subtitle_color" />
+
+  <!-- Forcefully tint notification icon text -->
+  <java-symbol type="bool" name="config_useDarkBgNotificationIconTextTinting" />
+  <java-symbol type="bool" name="config_useDarkBgNotificationTinting_override" />
+  <java-symbol type="bool" name="config_notificationTinting_override" />
+
+  <!-- Oreo's recents component activity -->
+  <java-symbol type="string" name="config_recentsComponentNameOreo" />
+
+  <!-- SystemUI Restart -->
+  <java-symbol type="string" name="systemui_restart_title" />
+  <java-symbol type="string" name="systemui_restart_message" />
+
+  <!-- display for radio tech -->
+  <java-symbol type="bool" name="config_display_rat" />
+  <!-- config 2G/3G/4G RAT strings for carriers -->
+  <java-symbol type="string" name="config_rat_unknown" />
+  <java-symbol type="string" name="config_rat_2g" />
+  <java-symbol type="string" name="config_rat_3g" />
+  <java-symbol type="string" name="config_rat_4g" />
+
+  <!-- Fastscroller -->
+  <java-symbol type="color" name="fastscroller_text_color" />
+
+  <!-- Alternative keyhandler -->
+  <java-symbol type="string" name="config_alternativeDeviceKeyHandlerLib" />
+  <java-symbol type="string" name="config_alternativeDeviceKeyHandlerClass" />
+
+  <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
+  <java-symbol type="bool" name="config_cleanupUnusedFingerprints" />
+
+  <!-- Weather icons -->
+  <java-symbol type="drawable" name="weather_01" />
+  <java-symbol type="drawable" name="weather_01n" />
+  <java-symbol type="drawable" name="weather_02" />
+  <java-symbol type="drawable" name="weather_02n" />
+  <java-symbol type="drawable" name="weather_03" />
+  <java-symbol type="drawable" name="weather_03n" />
+  <java-symbol type="drawable" name="weather_04" />
+  <java-symbol type="drawable" name="weather_04n" />
+  <java-symbol type="drawable" name="weather_09" />
+  <java-symbol type="drawable" name="weather_10" />
+  <java-symbol type="drawable" name="weather_10n" />
+  <java-symbol type="drawable" name="weather_11" />
+  <java-symbol type="drawable" name="weather_13" />
+  <java-symbol type="drawable" name="weather_50" />
+
+</resources>
