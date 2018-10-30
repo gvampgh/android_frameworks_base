@@ -322,8 +322,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
             .build();
 
-    public static final int FADE_KEYGUARD_START_DELAY = 100;
-    public static final int FADE_KEYGUARD_DURATION = 300;
+    public static final int FADE_KEYGUARD_START_DELAY = 50;
+    public static final int FADE_KEYGUARD_DURATION = 150;
     public static final int FADE_KEYGUARD_DURATION_PULSING = 96;
 
     /** If true, the system is in the half-boot-to-decryption-screen state.
@@ -1820,7 +1820,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                                 + mBackdropBack.getDrawable());
                     }
                     mBackdropFront.animate()
-                            .setDuration(250)
+                            .setDuration(150)
                             .alpha(0f).withEndAction(mHideBackdropFront);
                 }
             }
@@ -1845,7 +1845,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mBackdrop.animate()
                             .alpha(SRC_MIN_ALPHA)
                             .setInterpolator(Interpolators.ACCELERATE_DECELERATE)
-                            .setDuration(300)
+                            .setDuration(200)
                             .setStartDelay(0)
                             .withEndAction(() -> {
                                 mBackdrop.setVisibility(View.GONE);
@@ -1930,7 +1930,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         flagdbg.append('>');
         Log.d(TAG, flagdbg.toString());
 	*/
-	
+
         if ((diff1 & StatusBarManager.DISABLE_EXPAND) != 0) {
             if ((state1 & StatusBarManager.DISABLE_EXPAND) != 0) {
                 animateCollapsePanels();
@@ -5750,6 +5750,62 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     };
 
+    // Reset navigation bar visibility after adding its view to window manager.
+    public static final boolean RESET_SYSTEMUI_VISIBILITY_FOR_NAVBAR = true;
+    protected boolean mUseNavBar = false;
+
+    final private ContentObserver mNavBarObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange) {
+            boolean wasUsing = mUseNavBar;
+            boolean defaultToNavigationBar = mContext.getResources()
+                    .getBoolean(com.android.internal.R.bool.config_defaultToNavigationBar);
+            mUseNavBar = Settings.System.getIntForUser(
+                    mContext.getContentResolver(), Settings.System.NAVIGATION_BAR_ENABLED,
+                    defaultToNavigationBar ? 1 : 0, UserHandle.USER_CURRENT) != 0;
+            Log.d(TAG, "navbar is " + (mUseNavBar ? "enabled" : "disabled"));
+            if (wasUsing != mUseNavBar) {
+                setNavBarEnabled(mUseNavBar);
+                if (mAssistManager != null) {
+                    mAssistManager.onConfigurationChanged(mContext.getResources().getConfiguration());
+                }
+            }
+        }
+    };
+
+    private void resetNavBarObserver() {
+        mContext.getContentResolver().unregisterContentObserver(mNavBarObserver);
+        mNavBarObserver.onChange(false);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.NAVIGATION_BAR_ENABLED), true,
+                mNavBarObserver, UserHandle.USER_CURRENT);
+    }
+
+    private void setNavBarEnabled(boolean enabled) {
+        if (enabled) {
+            createNavigationBar();
+            if (RESET_SYSTEMUI_VISIBILITY_FOR_NAVBAR) {
+                resetSystemUIVisibility();
+            }
+        } else {
+            removeNavigationBar();
+        }
+    }
+
+    private void removeNavigationBar() {
+        if (DEBUG) Log.v(TAG, "removeNavigationBar: about to remove " + mNavigationBarView);
+        if (!mNavigationBarViewAttached || mNavigationBarView == null) return;
+        mWindowManager.removeViewImmediate(mNavigationBarView);
+        mNavigationBarView = null;
+        mNavigationBarViewAttached = false;
+    }
+
+    private void resetSystemUIVisibility() {
+        checkBarModes();
+        notifyUiVisibilityChanged(mSystemUiVisibility);
+    }
+
+>>>>>>> cddb0c75a99... SystemUI: StatusBar: Speed up its animations
     public NotificationGutsManager getGutsManager() {
         return mGutsManager;
     }
