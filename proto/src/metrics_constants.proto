@@ -6125,6 +6125,9 @@ message MetricsEvent {
     // NOTIFICATION_SINCE_INTERRUPTION_MILLIS added to P
     // NOTIFICATION_INTERRUPTION added to P
 
+    //Optimized lineage 16.0
+    OPTLOS = 9999;
+    
     // ---- End P Constants, all P constants go above this line ----
 
     // Time since this notification last interrupted (visibly or audible) the user
