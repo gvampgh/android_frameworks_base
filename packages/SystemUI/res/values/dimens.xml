@@ -296,6 +296,8 @@
 
     <dimen name="volume_dialog_panel_transparent_padding">20dp</dimen>
 
+    <dimen name="volume_dialog_panel_transparent_padding_bottom">2dp</dimen>
+
     <dimen name="volume_dialog_stream_padding">8dp</dimen>
 
     <!-- the amount the volume panel should be offset at the end from the view next to it (or
