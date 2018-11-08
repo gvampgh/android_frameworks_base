@@ -31,4 +31,6 @@
          * Right -> 53 (Gravity.TOP | Gravity.RIGHT)
     -->
     <integer name="hardware_ui_align">53</integer>
+
+    <integer name="volume_dialog_align">51</integer>
 </resources>
