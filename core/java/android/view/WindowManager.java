@@ -1726,6 +1726,7 @@ public interface WindowManager extends ViewManager {
         /**
          * Window flag: Overrides default power key behavior
         /**
+
          * Control flags that are private to the platform.
          * @hide
          */
