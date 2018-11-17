@@ -4165,7 +4165,6 @@ public final class Settings {
         /** @hide */
         private static final Validator QS_PANEL_BG_ALPHA_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
-
         /**
          * Whether to display 4G icon instead LTE
          * @hide
