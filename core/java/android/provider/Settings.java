@@ -4135,7 +4135,6 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
         
-        /**
 
         /**
          * Whether to display 4G icon instead LTE
