@@ -4155,6 +4155,14 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
         
+         /**
+         * Whether to change the transparency of the qs panel
+         * @hide
+         */
+        public static final String QS_PANEL_BG_ALPHA = "qs_panel_bg_alpha";
+
+        /** @hide */
+        private static final Validator QS_PANEL_BG_ALPHA_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
          * Whether to display 4G icon instead LTE
@@ -4228,6 +4236,7 @@ public final class Settings {
             HAPTIC_FEEDBACK_INTENSITY,
             DISPLAY_COLOR_MODE,
             NOTIFICATION_LIGHT_PULSE,
+            QS_PANEL_BG_ALPHA
         };
 
         /**
@@ -5634,15 +5643,7 @@ public final class Settings {
          */
         public static final String TV_USER_SETUP_COMPLETE = "tv_user_setup_complete";
 
-        /**
-         * Whether to change the transparency of the qs panel
-         * @hide
-         */
-        public static final String QS_PANEL_BG_ALPHA = "qs_panel_bg_alpha";
-
-        /** @hide */
-        private static final Validator QS_PANEL_BG_ALPHA_VALIDATOR = ANY_INTEGER_VALIDATOR;
-
+       
         /**
          * Prefix for category name that marks whether a suggested action from that category was
          * completed.
@@ -8148,7 +8149,6 @@ public final class Settings {
             LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS,
             LOCK_SCREEN_SHOW_NOTIFICATIONS,
             VOLUME_LINK_NOTIFICATION,
-            QS_PANEL_BG_ALPHA,
         };
 
         /**
