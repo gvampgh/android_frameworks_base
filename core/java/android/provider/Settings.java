@@ -4168,16 +4168,6 @@ public final class Settings {
         private static final Validator QS_PANEL_BG_ALPHA_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
-         * Weather lockscreen temperature scale
-         * @hide
-         */
-        public static final String WEATHER_LOCKSCREEN_UNIT = "weather_lockscreen_unit";
-
-        /** @hide */
-        private static final Validator WEATHER_LOCKSCREEN_UNIT_VALIDATOR =
-               BOOLEAN_VALIDATOR;
-
-        /**
          * Whether to display 4G icon instead LTE
          * @hide
          */
@@ -4364,9 +4354,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
             PRIVATE_SETTINGS.add(QS_PANEL_BG_ALPHA);
-            PRIVATE_SETTINGS.add(WEATHER_LOCKSCREEN_UNIT);
         }
-            
 
         /**
          * These are all public system settings
@@ -4455,7 +4443,6 @@ public final class Settings {
             VALIDATORS.put(WIFI_STATIC_DNS2, WIFI_STATIC_DNS2_VALIDATOR);
             VALIDATORS.put(SHOW_BATTERY_PERCENT, SHOW_BATTERY_PERCENT_VALIDATOR);
             VALIDATORS.put(QS_PANEL_BG_ALPHA, QS_PANEL_BG_ALPHA_VALIDATOR);
-            VALIDATORS.put(WEATHER_LOCKSCREEN_UNIT, WEATHER_LOCKSCREEN_UNIT_VALIDATOR);
         }
 
         /**
