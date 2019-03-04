@@ -87,6 +87,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import com.android.internal.widget.LockPatternUtils;
+import com.android.keyguard.KeyguardUpdateMonitor;
+import android.content.ContentResolver;
+import android.provider.Settings;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.UserHandle;
+
 public class NotificationPanelView extends PanelView implements
         ExpandableView.OnHeightChangedListener,
         View.OnClickListener, NotificationStackScrollLayout.OnOverscrollTopChangedListener,
@@ -97,6 +106,10 @@ public class NotificationPanelView extends PanelView implements
 
     // Cap and total height of Roboto font. Needs to be adjusted when font for the big clock is
     // changed.
+
+    private boolean mQsSecureExpandDisabled;
+    private LockPatternUtils mLockPatternUtils;
+
     private static final int CAP_HEIGHT = 1456;
     private static final int FONT_HEIGHT = 2163;
 
@@ -313,6 +326,7 @@ public class NotificationPanelView extends PanelView implements
         super(context, attrs);
         setWillNotDraw(!DEBUG);
         mFalsingManager = FalsingManager.getInstance(context);
+        mLockPatternUtils = new LockPatternUtils(context);
         mPowerManager = context.getSystemService(PowerManager.class);
         mAccessibilityManager = context.getSystemService(AccessibilityManager.class);
         setAccessibilityPaneTitle(determineAccessibilityPaneTitle());
@@ -652,7 +666,7 @@ public class NotificationPanelView extends PanelView implements
     }
 
     public void setQsExpansionEnabled(boolean qsExpansionEnabled) {
-        mQsExpansionEnabled = qsExpansionEnabled;
+        mQsExpansionEnabled = qsExpansionEnabled && !isQsSecureExpandDisabled();
         if (mQs == null) return;
         mQs.setHeaderClickable(qsExpansionEnabled);
     }
@@ -1029,7 +1043,8 @@ public class NotificationPanelView extends PanelView implements
         }
         showQsOverride &= mStatusBarState == StatusBarState.SHADE;
 
-        return twoFingerDrag || showQsOverride || stylusButtonClickDrag || mouseButtonClickDrag;
+        return !isQsSecureExpandDisabled() && (twoFingerDrag || showQsOverride
+                || stylusButtonClickDrag || mouseButtonClickDrag);
     }
 
     private void handleQsDown(MotionEvent event) {
@@ -1197,6 +1212,37 @@ public class NotificationPanelView extends PanelView implements
         }
     }
 
+	class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCK_QS_DISABLED), false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        void unobserve() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+        public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            mQsSecureExpandDisabled = Settings.System.getIntForUser(resolver,
+                    Settings.System.LOCK_QS_DISABLED, 0,
+                    UserHandle.USER_CURRENT) != 0;
+        }
+    }
+
     public void setBarState(int statusBarState, boolean keyguardFadingAway,
             boolean goingToFullShade) {
         int oldState = mStatusBarState;
@@ -1208,6 +1254,7 @@ public class NotificationPanelView extends PanelView implements
         mKeyguardShowing = keyguardShowing;
         if (mQs != null) {
             mQs.setKeyguardShowing(mKeyguardShowing);
+            mQs.setSecureExpandDisabled(isQsSecureExpandDisabled());
         }
 
         if (oldState == StatusBarState.KEYGUARD
@@ -2919,4 +2966,12 @@ public class NotificationPanelView extends PanelView implements
         setKeyguardStatusViewVisibility(mStatusBarState, true /* keyguardFadingAway */,
                 false /* goingToFullShade */);
     }
+
+    private boolean isQsSecureExpandDisabled() {
+        final boolean keyguardOrShadeShowing = mStatusBarState == StatusBarState.KEYGUARD
+                || mStatusBarState == StatusBarState.SHADE_LOCKED;
+        return mLockPatternUtils.isSecure(KeyguardUpdateMonitor.getCurrentUser()) && mQsSecureExpandDisabled &&
+                keyguardOrShadeShowing;
+    }
+
 }

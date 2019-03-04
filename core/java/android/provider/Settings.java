@@ -1728,6 +1728,9 @@ public final class Settings {
      * This can be passed as an extra field to the {@link #ACTION_VOICE_CONTROL_BATTERY_SAVER_MODE}
      * intent as a boolean to indicate if it should be enabled.
      */
+
+
+
     public static final String EXTRA_BATTERY_SAVER_MODE_ENABLED =
             "android.settings.extra.battery_saver_mode_enabled";
 
@@ -2868,6 +2871,8 @@ public final class Settings {
 
         private static final Validator END_BUTTON_BEHAVIOR_VALIDATOR =
                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
+
+
 
         /**
          * END_BUTTON_BEHAVIOR value for "go home".
@@ -4203,6 +4208,18 @@ public final class Settings {
          */
         public static final String QS_COLUMNS_LANDSCAPE = "qs_columns_landscape";
 
+
+
+ 		/**
+         * Disable expanding quick settings on secure lock screens
+         *
+         * @hide
+         */
+        public static final String LOCK_QS_DISABLED = "lockscreen_qs_disabled";
+
+        private static final Validator LOCK_QS_DISABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
@@ -4264,6 +4281,7 @@ public final class Settings {
             DISPLAY_COLOR_MODE,
             QS_PANEL_BG_ALPHA,
             NOTIFICATION_LIGHT_PULSE,
+            LOCK_QS_DISABLED
         };
 
         /**
@@ -4379,6 +4397,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
             PRIVATE_SETTINGS.add(QS_PANEL_BG_ALPHA);
+            PRIVATE_SETTINGS.add(LOCK_QS_DISABLED);
         }
 
         /**
@@ -4469,6 +4488,8 @@ public final class Settings {
             VALIDATORS.put(SHOW_BATTERY_PERCENT, SHOW_BATTERY_PERCENT_VALIDATOR);
             VALIDATORS.put(QS_PANEL_BG_ALPHA, QS_PANEL_BG_ALPHA_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
+            VALIDATORS.put(LOCK_QS_DISABLED, LOCK_QS_DISABLED_VALIDATOR);
+
         }
 
         /**
@@ -6145,6 +6166,8 @@ public final class Settings {
         public static final String HUSH_GESTURE_USED = "hush_gesture_used";
 
         private static final Validator HUSH_GESTURE_USED_VALIDATOR = BOOLEAN_VALIDATOR;
+
+       
 
         /**
          * Number of times the user has manually clicked the ringer toggle
@@ -7955,6 +7978,8 @@ public final class Settings {
             }
         };
 
+ 		
+
         /**
          * Whether the Lockdown button should be shown in the power menu.
          * @hide
@@ -8070,6 +8095,7 @@ public final class Settings {
 
         private static final Validator VOLUME_LINK_NOTIFICATION_VALIDATOR = BOOLEAN_VALIDATOR;
 
+
         /**
          * This are the settings to be backed up.
          *
@@ -8171,7 +8197,7 @@ public final class Settings {
             VOLUME_HUSH_GESTURE,
             MANUAL_RINGER_TOGGLE_COUNT,
             HUSH_GESTURE_USED,
-            VOLUME_LINK_NOTIFICATION,
+            VOLUME_LINK_NOTIFICATION
         };
 
         /**
@@ -8321,6 +8347,7 @@ public final class Settings {
             VALIDATORS.put(VOLUME_LINK_NOTIFICATION, VOLUME_LINK_NOTIFICATION_VALIDATOR);
             VALIDATORS.put(LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS, BOOLEAN_VALIDATOR);
             VALIDATORS.put(LOCK_SCREEN_SHOW_NOTIFICATIONS, BOOLEAN_VALIDATOR);
+
         }
 
         /**
@@ -12234,6 +12261,8 @@ public final class Settings {
          *
          * @hide
          */
+
+
         public static final String[] SETTINGS_TO_BACKUP = {
             BUGREPORT_IN_POWER_MENU,
             STAY_ON_WHILE_PLUGGED_IN,
