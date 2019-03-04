@@ -82,6 +82,10 @@ public class CarQSFragment extends Fragment implements QS {
         mFooter.setUserSwitchCallback(mUserSwitchCallback);
     }
 
+	@Override
+    public void setSecureExpandDisabled(boolean value) {
+    }
+
     @Override
     public void hideImmediately() {
         getView().setVisibility(View.INVISIBLE);
