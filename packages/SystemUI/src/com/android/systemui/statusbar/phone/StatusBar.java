@@ -972,7 +972,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                     if (mHeadsUpManager.hasPinnedHeadsUp()) {
                         mNotificationPanel.notifyBarPanelExpansionChanged();
                     }
-                    
+
                     mStatusBarView.setBouncerShowing(mBouncerShowing);
                     if (oldStatusBarView != null) {
                         float fraction = oldStatusBarView.getExpansionFraction();
@@ -2013,6 +2013,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                 old2, state2, diff2));
         }
 
+	/*
         StringBuilder flagdbg = new StringBuilder();
         flagdbg.append("disable<");
         flagdbg.append(0 != ((state1 & StatusBarManager.DISABLE_EXPAND))                ? 'E' : 'e');
@@ -2042,6 +2043,8 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         flagdbg.append(0 != ((diff2  & StatusBarManager.DISABLE2_NOTIFICATION_SHADE))   ? '!' : ' ');
         flagdbg.append('>');
         if (DEBUG) Log.d(TAG, flagdbg.toString());
+
+	*/
 
         if ((diff1 & StatusBarManager.DISABLE_EXPAND) != 0) {
             if ((state1 & StatusBarManager.DISABLE_EXPAND) != 0) {
@@ -5768,7 +5771,7 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HEADS_UP_STOPLIST_VALUES), 
+                    Settings.System.HEADS_UP_STOPLIST_VALUES),
                     false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_BLACKLIST_VALUES),
