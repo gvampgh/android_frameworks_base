@@ -671,14 +671,6 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
 
     @Override
     public boolean isBleScanAlwaysAvailable() {
-        if (isAirplaneModeOn() && !mEnable) {
-            return false;
-        }
-        try {
-            return Settings.Global.getInt(mContentResolver,
-                    Settings.Global.BLE_SCAN_ALWAYS_AVAILABLE) != 0;
-        } catch (SettingNotFoundException e) {
-        }
         return false;
     }
 
