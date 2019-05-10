@@ -6120,6 +6120,11 @@ message MetricsEvent {
     //Optimized lineage 16.0
     OPTLOS = 9999;
 
+    // FIELD: Device USB overheat alarm trigger.
+    // CATEGORY: GLOBAL_SYSTEM_UI
+    // OS: P
+    POWER_OVERHEAT_ALARM = 1457;
+
     // NOTIFICATION_SINCE_INTERRUPTION_MILLIS added to P
     // NOTIFICATION_INTERRUPTION added to P
 
