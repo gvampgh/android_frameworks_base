@@ -319,7 +319,6 @@ public class BatteryMeterDrawableBase extends Drawable {
 
     @Override
     public void draw(Canvas c) {
-
         if (mMeterStyle == BATTERY_STYLE_CIRCLE) {
             drawCircle(c);
         } else {
@@ -327,7 +326,7 @@ public class BatteryMeterDrawableBase extends Drawable {
         }
     }
 
-private void drawCircle(Canvas c) {
+    private void drawCircle(Canvas c) {
         final int level = mLevel;
 
         if (level == -1) return;
