@@ -169,8 +169,6 @@ public class BatteryMeterDrawableBase extends Drawable {
         mPowersavePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPowersavePaint.setColor(mPlusPaint.getColor());
         mPowersavePaint.setStyle(Style.STROKE);
-        mPowersavePaint.setStrokeWidth(context.getResources()
-                .getDimensionPixelSize(R.dimen.battery_powersave_outline_thickness));
 
         mIntrinsicWidth = context.getResources().getDimensionPixelSize(R.dimen.battery_width);
         mIntrinsicHeight = context.getResources().getDimensionPixelSize(R.dimen.battery_height);
