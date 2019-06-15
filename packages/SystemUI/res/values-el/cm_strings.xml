@@ -84,4 +84,9 @@
     <string name="quick_settings_location_detail_mode_battery_saving_description">Χρήση Wi\u2011Fi, Bluetooth ή δικτύων κινητής τηλεφωνίας για καθορισμό τοποθεσίας</string>
     <string name="quick_settings_location_detail_mode_sensors_only_description">Χρήση GPS για τον προσδιορισμό της τοποθεσίας</string>
     <string name="status_bar_battery">Μπαταρία</string>
+
+    <string name="quick_settings_sound_label">Προφίλ Ήχου</string>
+    <string name="quick_settings_sound_ring">Ήχος</string>
+    <string name="quick_settings_sound_vibrate">Δόνηση</string>
+    <string name="quick_settings_sound_dnd">Σίγαση</string>
 </resources>
