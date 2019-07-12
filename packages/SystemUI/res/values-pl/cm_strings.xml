@@ -85,6 +85,5 @@
     <string name="quick_settings_sound_ring">Dzwonek</string>
     <string name="quick_settings_sound_vibrate">Wibracje</string>
     <string name="quick_settings_sound_dnd">Tryb cichy</string>
-    <string name="quick_settings_location_detail_mode_sensors_only_description">Określaj lokalizację przez GPS</string>
-
+ 
 </resources>
