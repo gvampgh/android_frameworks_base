@@ -53,7 +53,7 @@ class OneHandedAnimator {
     private static final String TAG = "OneHandAnimator";
 
     private static final boolean LOCAL_DEBUG =
-            "eng".equals(SystemProperties.get("ro.build.type", ""));
+            !"user".equals(SystemProperties.get("ro.build.type", ""));
     private static final boolean VERBOSE_DEBUG = false;
 
     private static final long TRANSIT_DURATION = 350;
