@@ -171,7 +171,6 @@ public final class Choreographer {
     private long mFrameIntervalNanos;
     private boolean mDebugPrintNextFrameTimeDelta;
     private int mFPSDivisor = 1;
-    private boolean mSoftwareRendered;
 
     /**
      * Contains information about the current frame for jank-tracking,
@@ -242,7 +241,6 @@ public final class Choreographer {
         for (int i = 0; i <= CALLBACK_LAST; i++) {
             mCallbackQueues[i] = new CallbackQueue();
         }
-        mSoftwareRendered = false;
         // b/68769804: For low FPS experiments.
         setFPSDivisor(SystemProperties.getInt(ThreadedRenderer.DEBUG_FPS_DIVISOR, 1));
     }
@@ -394,9 +392,6 @@ public final class Choreographer {
         postCallbackDelayed(callbackType, action, token, 0);
     }
 
- 	void setSoftwareRendering(boolean softRendered) {
-        mSoftwareRendered = softRendered;
-    }
     /**
      * Posts a callback to run on the next frame after the specified delay.
      * <p>
@@ -598,7 +593,7 @@ public final class Choreographer {
     private void scheduleFrameLocked(long now) {
         if (!mFrameScheduled) {
             mFrameScheduled = true;
-            if (USE_VSYNC && !mSoftwareRendered ) {
+            if (USE_VSYNC) {
                 if (DEBUG_FRAMES) {
                     Log.d(TAG, "Scheduling next frame on vsync.");
                 }
