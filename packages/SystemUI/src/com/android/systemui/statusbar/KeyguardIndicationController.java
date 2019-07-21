@@ -98,7 +98,7 @@ public class KeyguardIndicationController {
     private int mChargingSpeed;
     private int mChargingWattage;
     private int mBatteryLevel;
-    private int mChargingCurrent;
+    private double mChargingCurrent;
     private double mChargingVoltage;
     private int mTemperature;
     private String mMessageToShowOnScreenOn;
