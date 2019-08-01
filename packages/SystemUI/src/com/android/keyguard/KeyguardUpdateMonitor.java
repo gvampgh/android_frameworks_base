@@ -789,8 +789,12 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener,
                 final int level = intent.getIntExtra(EXTRA_LEVEL, 0);
                 final int health = intent.getIntExtra(EXTRA_HEALTH, BATTERY_HEALTH_UNKNOWN);
 
-                final int maxChargingMicroAmp = intent.getIntExtra(EXTRA_MAX_CHARGING_CURRENT, -1);
+                int maxChargingMicroAmp = intent.getIntExtra(EXTRA_MAX_CHARGING_CURRENT, -1);
+
+                maxChargingMicroAmp = (maxChargingMicroAmp < 5000 ? maxChargingMicroAmp * 1000 : maxChargingMicroAmp);
+
                 int maxChargingMicroVolt = intent.getIntExtra(EXTRA_MAX_CHARGING_VOLTAGE, -1);
+
                 final int maxChargingMicroWatt;
 				final int temperature = intent.getIntExtra(EXTRA_TEMPERATURE, -1);;
                 if (maxChargingMicroVolt <= 0) {
