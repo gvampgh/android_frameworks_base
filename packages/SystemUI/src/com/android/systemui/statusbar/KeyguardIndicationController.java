@@ -67,7 +67,7 @@ import java.util.IllegalFormatConversionException;
 public class KeyguardIndicationController {
 
     private static final String TAG = "KeyguardIndication";
-    private static final boolean DEBUG_CHARGING_SPEED = false;
+    private static final boolean DEBUG_CHARGING_SPEED = true;
 
     private static final int MSG_HIDE_TRANSIENT = 1;
     private static final int MSG_CLEAR_FP_MSG = 2;
@@ -98,7 +98,7 @@ public class KeyguardIndicationController {
     private int mChargingSpeed;
     private int mChargingWattage;
     private int mBatteryLevel;
-    private double mChargingCurrent;
+    private int mChargingCurrent;
     private double mChargingVoltage;
     private int mTemperature;
     private String mMessageToShowOnScreenOn;
@@ -424,27 +424,21 @@ public class KeyguardIndicationController {
         }
 
         String batteryInfo = "";
-        boolean showbatteryInfo = true;
-         if (showbatteryInfo) {
-            if (mChargingCurrent > 0) {
-                 batteryInfo = batteryInfo + (mChargingCurrent < 5 ?
-                          (mChargingCurrent * 1000) : (mChargingCurrent < 4000 ?
-                          mChargingCurrent : (mChargingCurrent / 1000))) + "mA" ;
-                
-            }
-            if (mChargingVoltage > 0) {
-                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
-                        String.format("%.1f", (mChargingVoltage / 1000 / 1000)) + "V";
-            }
-            if (mTemperature > 0) {
-                batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
-                        mTemperature / 10 + "°C";
-            }
-            if (batteryInfo != "") {
-                batteryInfo = "\n" + batteryInfo;
-            }
-        }
 
+        if (mChargingCurrent > 0) {
+           batteryInfo = batteryInfo + (mChargingCurrent / 1000) + "mA";
+        }
+        if (mChargingVoltage > 0) {
+           batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
+                         String.format("%.1f", (mChargingVoltage / 1000 / 1000)) + "V";
+        }
+        if (mTemperature > 0) {
+           batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
+                         mTemperature / 10 + "°C";
+        }
+        if (batteryInfo != "") {
+           batteryInfo = "\n" + batteryInfo;
+        }
 
         String percentage = NumberFormat.getPercentInstance()
                 .format(mBatteryLevel / 100f);
@@ -518,6 +512,8 @@ public class KeyguardIndicationController {
         pw.println("  mPowerPluggedIn: " + mPowerPluggedIn);
         pw.println("  mPowerCharged: " + mPowerCharged);
         pw.println("  mChargingSpeed: " + mChargingSpeed);
+        pw.println("  mChargingCurrent: " + mChargingCurrent);
+        pw.println("  mChargingVoltage: " + mChargingVoltage);
         pw.println("  mChargingWattage: " + mChargingWattage);
         pw.println("  mMessageToShowOnScreenOn: " + mMessageToShowOnScreenOn);
         pw.println("  mDozing: " + mDozing);
@@ -538,7 +534,7 @@ public class KeyguardIndicationController {
             mPowerPluggedInWired = status.isPluggedInWired() && isChargingOrFull;
             mPowerPluggedIn = status.isPluggedIn() && isChargingOrFull;
             mPowerCharged = status.isCharged();
- 			mChargingCurrent = status.maxChargingCurrent;
+ 	    mChargingCurrent = status.maxChargingCurrent;
             mChargingVoltage = status.maxChargingVoltage;
             mChargingWattage = status.maxChargingWattage;
             mTemperature = status.temperature;

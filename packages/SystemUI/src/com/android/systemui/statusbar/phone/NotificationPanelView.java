@@ -1020,7 +1020,7 @@ public class NotificationPanelView extends PanelView implements
 
         final float w = getMeasuredWidth();
         final float x = event.getX();
-        float region = w * 1.f / 4.f; // TODO overlay region fraction?
+        float region = w * 1.f / 3.f; // TODO overlay region fraction?
         boolean showQsOverride = false;
 
         switch (mOneFingerQuickSettingsIntercept) {
@@ -1031,6 +1031,11 @@ public class NotificationPanelView extends PanelView implements
                 showQsOverride = isLayoutRtl() ? w - region < x : x < region;
                 break;
         }
+        if (mStatusBar.hasActiveClearableNotificationsQS())
+        {
+           showQsOverride = false;
+        }
+
         showQsOverride &= mStatusBarState == StatusBarState.SHADE;
 
         return twoFingerDrag || showQsOverride || stylusButtonClickDrag || mouseButtonClickDrag;
