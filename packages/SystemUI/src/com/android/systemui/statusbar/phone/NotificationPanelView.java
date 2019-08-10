@@ -109,6 +109,8 @@ public class NotificationPanelView extends PanelView implements
 
     public static final String STATUS_BAR_QUICK_QS_PULLDOWN =
             "lineagesystem:" + LineageSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN;
+    public static final String STATUS_BAR_QUICK_QS_PD_OINN =
+            "lineagesystem:" + LineageSettings.System.STATUS_BAR_QUICK_QS_PD_OINN;
     public static final String DOUBLE_TAP_SLEEP_GESTURE =
             "lineagesystem:" + LineageSettings.System.DOUBLE_TAP_SLEEP_GESTURE;
 
@@ -307,6 +309,7 @@ public class NotificationPanelView extends PanelView implements
             .setCustomInterpolator(PANEL_ALPHA.getProperty(), Interpolators.ALPHA_IN);
 
     private int mOneFingerQuickSettingsIntercept;
+    private boolean mQuickPullDownOINN;
     private boolean mDoubleTapToSleepEnabled;
     private GestureDetector mDoubleTapGesture;
 
@@ -363,6 +366,7 @@ public class NotificationPanelView extends PanelView implements
         FragmentHostManager.get(this).addTagListener(QS.TAG, mFragmentListener);
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, STATUS_BAR_QUICK_QS_PULLDOWN);
+        tunerService.addTunable(this, STATUS_BAR_QUICK_QS_PD_OINN);
         tunerService.addTunable(this, DOUBLE_TAP_SLEEP_GESTURE);
     }
 
@@ -380,6 +384,8 @@ public class NotificationPanelView extends PanelView implements
             try {
                 mOneFingerQuickSettingsIntercept = Integer.parseInt(newValue);
             } catch (NumberFormatException ex) {}
+        } else if (STATUS_BAR_QUICK_QS_PD_OINN.equals(key)) {
+            mQuickPullDownOINN = TunerService.parseIntegerSwitch(newValue, false);
         } else if (DOUBLE_TAP_SLEEP_GESTURE.equals(key)) {
             mDoubleTapToSleepEnabled = TunerService.parseIntegerSwitch(newValue, true);
         }
@@ -1031,6 +1037,17 @@ public class NotificationPanelView extends PanelView implements
                 showQsOverride = isLayoutRtl() ? w - region < x : x < region;
                 break;
         }
+<<<<<<< HEAD
+=======
+
+        // If quick pulldown is enabled at one side, showQsOverride is true at this point
+        // = would be pulled down quickly
+        if (mStatusBar.hasActiveClearableNotificationsQS() && mQuickPullDownOINN)
+        {
+           showQsOverride = false;
+        }
+
+>>>>>>> Quick QS pull down only if no noti visible 2
         showQsOverride &= mStatusBarState == StatusBarState.SHADE;
 
         return twoFingerDrag || showQsOverride || stylusButtonClickDrag || mouseButtonClickDrag;
