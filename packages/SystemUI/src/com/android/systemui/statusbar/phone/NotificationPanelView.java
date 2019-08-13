@@ -1037,8 +1037,6 @@ public class NotificationPanelView extends PanelView implements
                 showQsOverride = isLayoutRtl() ? w - region < x : x < region;
                 break;
         }
-<<<<<<< HEAD
-=======
 
         // If quick pulldown is enabled at one side, showQsOverride is true at this point
         // = would be pulled down quickly
@@ -1047,7 +1045,6 @@ public class NotificationPanelView extends PanelView implements
            showQsOverride = false;
         }
 
->>>>>>> Quick QS pull down only if no noti visible 2
         showQsOverride &= mStatusBarState == StatusBarState.SHADE;
 
         return twoFingerDrag || showQsOverride || stylusButtonClickDrag || mouseButtonClickDrag;
