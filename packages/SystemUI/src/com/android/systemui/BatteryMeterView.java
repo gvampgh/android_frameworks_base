@@ -23,6 +23,7 @@ import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STY
 import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STYLE_TEXT;
 
 import static lineageos.providers.LineageSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT;
+import static lineageos.providers.LineageSettings.System.STATUS_BAR_SHOW_BATTERY_PCT_SIGN;
 
 import android.animation.ArgbEvaluator;
 import android.app.ActivityManager;
@@ -80,6 +81,7 @@ public class BatteryMeterView extends LinearLayout implements
     private boolean mCharging;
     private boolean mBatteryHidden;
     private int mBatteryStyle = BATTERY_STYLE_PORTRAIT;
+    private boolean mShowBatteryPercentageSign = true;
 
     private BatteryController mBatteryController;
     private SettingObserver mSettingObserver;
@@ -153,7 +155,9 @@ public class BatteryMeterView extends LinearLayout implements
                 getContext().getContentResolver().registerContentObserver(
                         LineageSettings.System.getUriFor(STATUS_BAR_SHOW_BATTERY_PERCENT),
                         false, mSettingObserver, newUserId);
-            }
+                getContext().getContentResolver().registerContentObserver(
+                        LineageSettings.System.getUriFor(STATUS_BAR_SHOW_BATTERY_PCT_SIGN),
+                        false, mSettingObserver, newUserId);            }
         };
 
         setClipChildren(false);
@@ -219,6 +223,9 @@ public class BatteryMeterView extends LinearLayout implements
             mBatteryStyle = Integer.parseInt(newValue);
             updateBatteryStyle();
             updateShowPercent();
+        } else if (STATUS_BAR_SHOW_BATTERY_PCT_SIGN.equals(key) && newValue != null) {
+            mShowBatteryPercentageSign = 1 == Integer.parseInt(newValue);
+            updateShowPercent();
         }
     }
 
@@ -230,6 +237,9 @@ public class BatteryMeterView extends LinearLayout implements
         mUser = ActivityManager.getCurrentUser();
         getContext().getContentResolver().registerContentObserver(
                 LineageSettings.System.getUriFor(STATUS_BAR_SHOW_BATTERY_PERCENT),
+                false, mSettingObserver, mUser);
+        getContext().getContentResolver().registerContentObserver(
+                LineageSettings.System.getUriFor(STATUS_BAR_SHOW_BATTERY_PCT_SIGN),
                 false, mSettingObserver, mUser);
         updateShowPercent();
         Dependency.get(TunerService.class)
@@ -275,8 +285,16 @@ public class BatteryMeterView extends LinearLayout implements
 
     private void updatePercentText() {
         if (mBatteryPercentView != null) {
-            mBatteryPercentView.setText(
-                    NumberFormat.getIntegerInstance().format(mLevel));
+           if(mShowBatteryPercentageSign)
+           {
+               mBatteryPercentView.setText(
+               NumberFormat.getPercentInstance().format(mLevel / 100f));
+           }
+           else
+           {
+               mBatteryPercentView.setText(
+                   NumberFormat.getIntegerInstance().format(mLevel));
+           }
         }
     }
 
@@ -288,6 +306,9 @@ public class BatteryMeterView extends LinearLayout implements
         final boolean showPercent = 2 == LineageSettings.System
                 .getIntForUser(getContext().getContentResolver(),
                 STATUS_BAR_SHOW_BATTERY_PERCENT, 0, mUser);
+        mShowBatteryPercentageSign = 1 == LineageSettings.System
+                .getIntForUser(getContext().getContentResolver(),
+                STATUS_BAR_SHOW_BATTERY_PCT_SIGN, 0, mUser);
         if ((showPercent || mForceShowPercent) &&
                 (!drawPercentInside || mCharging) || mBatteryStyle == BATTERY_STYLE_TEXT) {
             mDrawable.setShowPercent(false);
