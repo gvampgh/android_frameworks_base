@@ -332,7 +332,7 @@ public class BatteryMeterDrawableBase extends Drawable {
         if (level == -1) return;
 
         final int circleSize = Math.min(mWidth, mHeight);
-        float strokeWidth = circleSize / 6.5f;
+        float strokeWidth = circleSize / 8.5f;
 
         mFramePaint.setStrokeWidth(strokeWidth);
         mFramePaint.setStyle(Paint.Style.STROKE);
@@ -393,7 +393,8 @@ public class BatteryMeterDrawableBase extends Drawable {
         String pctText = null;
         if (!mCharging && level != 100 && mShowPercent) {
             mTextPaint.setColor(getColorForLevel(level));
-            mTextPaint.setTextSize(mHeight * (SINGLE_DIGIT_PERCENT ? 0.86f : 0.52f));
+            mTextPaint.setTextSize(mHeight * (SINGLE_DIGIT_PERCENT ? 0.86f : 0.72f));
+            mTextPaint.setLetterSpacing(-0.1f);
             mTextHeight = -mTextPaint.getFontMetrics().ascent;
             pctText = level > mCriticalLevel ?
                     String.valueOf(SINGLE_DIGIT_PERCENT ? (level / 10) : level) : mWarningString;
@@ -532,6 +533,8 @@ public class BatteryMeterDrawableBase extends Drawable {
         boolean pctOpaque = false;
         float pctX = 0, pctY = 0;
         String pctText = null;
+        mTextPaint.setLetterSpacing(0.0f);
+
         if (!mCharging && !mPowerSaveEnabled && level > mCriticalLevel && mShowPercent) {
             mTextPaint.setColor(getColorForLevel(level));
             mTextPaint.setTextSize(height *
