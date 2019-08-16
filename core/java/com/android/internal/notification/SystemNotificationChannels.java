@@ -146,7 +146,7 @@ public class SystemNotificationChannels {
         final NotificationChannel usb = new NotificationChannel(
                 USB,
                 context.getString(R.string.notification_channel_usb),
-                NotificationManager.IMPORTANCE_MIN);
+                NotificationManager.IMPORTANCE_HIGH);
         channelsList.add(usb);
 
         NotificationChannel foregroundChannel = new NotificationChannel(
