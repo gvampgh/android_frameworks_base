@@ -113,8 +113,6 @@ public class NotificationPanelView extends PanelView implements
             "lineagesystem:" + LineageSettings.System.STATUS_BAR_QUICK_QS_PD_OINN;
     public static final String DOUBLE_TAP_SLEEP_GESTURE =
             "lineagesystem:" + LineageSettings.System.DOUBLE_TAP_SLEEP_GESTURE;
-    public static final String STATUS_BAR_QUICK_QS_PD_OINN =
-            "lineagesystem:" + LineageSettings.System.STATUS_BAR_QUICK_QS_PD_OINN;
 
     private static final Rect mDummyDirtyRect = new Rect(0, 0, 1, 1);
 
@@ -311,7 +309,6 @@ public class NotificationPanelView extends PanelView implements
             .setCustomInterpolator(PANEL_ALPHA.getProperty(), Interpolators.ALPHA_IN);
 
     private int mOneFingerQuickSettingsIntercept;
-    private boolean mQuickPullDownOINN;
     private boolean mDoubleTapToSleepEnabled;
     private GestureDetector mDoubleTapGesture;
     private boolean mQuickPullDownOINN;
@@ -391,8 +388,6 @@ public class NotificationPanelView extends PanelView implements
             mQuickPullDownOINN = TunerService.parseIntegerSwitch(newValue, false);
         } else if (DOUBLE_TAP_SLEEP_GESTURE.equals(key)) {
             mDoubleTapToSleepEnabled = TunerService.parseIntegerSwitch(newValue, true);
-        } else if (STATUS_BAR_QUICK_QS_PD_OINN.equals(key)) {
-            mQuickPullDownOINN = TunerService.parseIntegerSwitch(newValue, false);
         }
     }
 
